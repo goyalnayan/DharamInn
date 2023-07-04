@@ -53,7 +53,7 @@
                 </form>
             </div>
         </div>
-    </div><!--====== Search From ======-->
+    </div>
     <!--====== Start Header ======-->
     <header class="header-area page-header transparent-header">
         <div class="top-bar text-white">
@@ -68,16 +68,68 @@
                         <div class="top-right d-flex align-items-center justify-content-lg-end">
                             <span class="text"><i class="far fa-envelope"></i>Subscribe & Get 10% Off</span>
                             <!-- <ul class="social-link">
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                </ul> -->
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            </ul> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+         <!--====== Start PHP for Contact ======-->
+ <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $name = $_POST['name'];
+        $phone_number = $_POST['phone_number'];
+        $email = $_POST['email'];
+        $website = $_POST['website'];
+        $message = $_POST['message'];
+
+      // Connection to the Database
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $database = "contacts";
+
+
+    // Create a connection object
+    $conn = mysqli_connect($servername, $username, $password, $database);
+    // Die if connection was not successful
+    if (!$conn){
+    die("Sorry we failed to connect: ". mysqli_connect_error());
+    }
+    else{
+    //Submit these to a database 
+    // Sql query to be executed
+    $sql = "INSERT INTO `contactnew` (`name`, `phone`, `email`, `website`, `message`, `dt`) VALUES ('$name', '$phone_number', '$email', '$website', '$message', current_timestamp())";
+    $result = mysqli_query($conn, $sql);
+
+    if($result){
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Your entry has been submitted successfully!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>';        
+    }
+    else{
+        // echo "The record was not inserted successfully because of this error ---> ". mysqli_error($conn);
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> We are facing some technical issues and your entry was not submitted successfully! We regret the inconvinience caused!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>';  
+    }
+    }
+    }
+?>
+
+
         <!--=== Header Navigation ===-->
         <div class="header-navigation navigation-two navigation-white">
             <div class="nav-overlay"></div>
@@ -117,21 +169,19 @@
                                         <ul class="sub-menu">
                                             <li><a href="products.html">Our Products</a></li>
                                             <!-- <li><a href="product-details.html">Product Details</a></li>
-                                                            <li><a href="cart.html">Sopping Cart</a></li>
-                                                            <li><a href="checkout.html">Checkout</a></li> -->
+                                                        <li><a href="cart.html">Sopping Cart</a></li>
+                                                        <li><a href="checkout.html">Checkout</a></li> -->
                                         </ul>
                                     </li>
                                     <!-- <li class="menu-item has-children"><a href="#">Blog</a>
-                                                        <ul class="sub-menu">
-                                                            <li><a href="blog-standard.html">Blog Standard</a></li>
-                                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                                        </ul>
-                                                    </li> -->
+                                                    <ul class="sub-menu">
+                                                        <li><a href="blog-standard.html">Blog Standard</a></li>
+                                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                                    </ul>
+                                                </li> -->
                                     <li class="menu-item"><a href="about.html">About</a></li>
                                     <li class="menu-item"><a href="gallery.html">Gallery</a></li>
                                     <li><a href="contact.php">Contact</a></li>                            
-
-
                                 </ul>
                             </nav>
                             <!--=== Nav Button ===-->
@@ -147,8 +197,8 @@
                                         class="fas fa-search"></i></div>
                             </div>
                             <div class="nav-call-button">
-                                <span><img src="assets/images/call.png" alt="icon"><a href="tel:000(123)45689">+91 75322
-                                        32390</a></span>
+                                <span><img src="assets/images/call.png" alt="icon"><a
+                                        href="tel:000(123)45689">+91 75322 32390</a></span>
                             </div>
                             <div class="menu-button d-xl-block d-none">
                                 <a href="contact.php" class="main-btn btn-red">Book a Table<i
@@ -172,210 +222,145 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="page-banner-content text-center wow fadeInDown">
-                        <h1 class="page-title">Gallery</h1>
+                        <h1 class="page-title">Contact</h1>
                         <ul class="breadcrumb-link text-white">
                             <li><a href="index.html">Home</a></li>
-                            <li class="active">Gallery</li>
+                            <li class="active">Contact Us</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section><!--====== End Breadcrumb Section ======-->
-    <!--====== Start Gallery Section ======-->
-    <section class="gallery-section pt-120 pb-90" id="gallery-filter">
+
+    <!--====== Start Contact Owner Section ======-->
+    <section class="chefs-bg-section light-red-bg pt-130 pb-100 bg_cover p-r z-1">
+        <div class="dot-bg bg_cover" style="background-image: url(assets/images/bg/dot-bg.png);"></div>
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6 col-lg-10">
-                    <div class="section-title text-center mb-50 wow fadeInUp">
-                        <span class="sub-title">photo gallery</span>
-                        <h2>Look Inside Photo Gallery</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="gallery-filter-button text-center mb-60 wow fadeInDown">
-                        <ul class="filter-btn">
-                            <li class="active" data-filter="*">Show All</li>
-                            <li data-filter=".cat-1">Fastfood</li>
-                            <li data-filter=".cat-2">Drink & juice</li>
-                            <li data-filter=".cat-3">Ice-cream & Cake</li>
-                            <li data-filter=".cat-4">Vegetables</li>
-                            <li data-filter=".cat-5">Soup</li>                           
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row gallery-row">
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-1">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/1.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Burger</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-1">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/2.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Pizza</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-4">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/3.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Vegetable Roll</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-2">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/4.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Organic Juice</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-1">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/5.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Sandwich</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-5">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/6.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Soup</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-5">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/7.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Vegetable Soup</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-3">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/8.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Ice-cream</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-4">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/9.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Mushroom</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-3">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/10.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Tiramisu Cake</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-1">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/11.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Pasta</h3>
-                        </div>
-                    </div>
-                </div>
+            <div class="row align-items-center">
                 
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-column cat-2">
-                    <div class="gallery-item-two mb-35 wow fadeInUp">
-                        <div class="gallery-img">
-                            <img src="assets/images/gallery/12.jpg" alt="Gallery Image">
-                            <div class="hover-overlay">
-                                <a href="#" class="icon-btn"><i class="far fa-arrow-right"></i></a>
+                <div class="col-xl-8 col-lg-12">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="single-team-item mb-30 wow fadeInUp">
+                                <div class="chef-img">
+                                    <img src="assets/images/profile/owner.jpg" alt="Chef Image">
+                                    <div class="chef-overlay"></div>
+                                    <div class="hover-content">
+                                        <!-- <h3 class="title">Jimmie K. Cryer</h3>
+                                            <p class="position">Senior Chef</p> -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="gallery-content text-center">
-                            <h3 class="title">Mango & Coconut Panna Cotta</h3>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-12">
+                    <div class="chef-content-box content-box-gap mb-30 pr-lg-30 wow fadeInLeft">
+                        <div class="section-title section-title-left mb-30">
+                            <span class="sub-title">Best food menu</span>
+                            <h2>Meet Our Owner
+                            </h2>
                         </div>
+                        <ul class="check-style-one">
+                            <li>Many Years of Experience in Restaurant
+                                Services in Mumbai</li>
+                            <li>Any Kind Of Food Made For Customer and So Much Yamee & Testy</li>
+                        </ul>
+                        <!-- <p>Sit amet consectetur adipiscing elitsue risus mauris quam adipiscing phasellus aene ante
+                                orcirat scelerisque enim ut nulla</p>
+                            <a href="chefs.html" class="main-btn filled-btn">become a chef<i
+                                    class="far fa-arrow-right"></i></a> -->
                     </div>
                 </div>
             </div>
         </div>
-    </section><!--====== End Gallery Section ======-->
+    </section>
+</section>
+    <!--====== End Contact Owner Section ======-->
+
+
+    
+
+<div class="contact-form-one"><form id="contactForm" class="contactForm" action="practice.php" name="contactForm" method="post"></form></div>
+
+<!--====== Start Contact Section ======-->
+<section class="contact-section pt-130 pb-130">
+<div class="container">
+    <div class="contact-info-wrapper pt-70 pb-30 wow fadeInUp">
+    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact-form-one">
+                    <form id="contactForm" class="contactForm" action="contact.php"
+                        name="contactForm" method="post">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="form_group form-group">
+                                    <input type="text" class="form_control" id="name" placeholder="Name"
+                                        name="name" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group form-group">
+                                    <input type="text" class="form_control" id="phone_number"
+                                        placeholder="Phone Number" name="phone_number" required
+                                        data-error="Please enter your Number">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group form-group">
+                                    <input type="email" class="form_control" id="email"
+                                        placeholder="Email Address" name="email" required
+                                        data-error="Please enter your Email">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form_group form-group">
+                                    <input type="url" class="form_control" id="website" placeholder="Website"
+                                        name="website" required data-error="Please enter your Website">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12">
+                                <div class="form_group form-group">
+                                    <textarea class="form_control" id="message" placeholder="Write Message"
+                                        name="message" required
+                                        data-error="Please enter your Message"></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form_group form-group">
+                                    <button class="main-btn btn-red" type="submit">Send us message<i
+                                            class="far fa-arrow-right"></i></button>
+                                    <div id="msgSubmit" class="hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section><!--====== End Contact Section ======-->
+
+    <!--====== Start Contact Map Section ======-->
+    <section class="contact-page-map wow fadeInUp">
+        <!--=== Map Box ===-->
+        <!-- <div class="map-box">
+                <iframe src="https://maps.google.com/maps?q=new%20york&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+            </div> -->
+    <!--====== End Contact Map Section ======-->
+
     <!--====== Start Partners Section ======-->
     <section class="partners-section light-red-bg pt-60 pb-60">
         <div class="container">
@@ -512,12 +497,12 @@
                     <div class="col-lg-6">
                         <!--=== Copyright Nav ===-->
                         <!-- <div class="copyright-nav float-lg-end">
-                                    <ul>
-                                        <li><a href="#">Setting & Privacy</a></li>
-                                        <li><a href="#">Faqs</a></li>
-                                        <li><a href="#">Food Menu</a></li>
-                                    </ul>
-                                </div> -->
+                                <ul>
+                                    <li><a href="#">Setting & Privacy</a></li>
+                                    <li><a href="#">Faqs</a></li>
+                                    <li><a href="#">Food Menu</a></li>
+                                </ul>
+                            </div> -->
                     </div>
                 </div>
             </div>
@@ -552,6 +537,13 @@
     <script src="assets/vendor/wow.min.js"></script>
     <!--====== Main js ======-->
     <script src="assets/js/theme.js"></script>
+
+    <!--====== AjaxChimp Min JS ======-->
+    <script src="assets/vendor/jquery.ajaxchimp.min.js"></script>
+    <!--====== Form Validator Min JS ======-->
+    <script src="assets/vendor/form-validator.min.js"></script>
+    <!--====== Contact Form Min JS ======-->
+    <script src="assets/vendor/contact-form-script.js"></script>
 </body>
 
 </html>
